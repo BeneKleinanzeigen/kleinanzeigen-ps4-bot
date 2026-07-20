@@ -1,0 +1,14 @@
+{
+  "console": {
+    "PS4": 60,
+    "PS4 Slim": 70,
+    "PS4 Pro": 90
+  },
+  "controller": {
+    "schwarz": 19,
+    "farbig": 25
+  },
+  "game_flat_price": 3,
+  "margin_threshold": 30,
+  "condition_note": "Konsole darf nicht defekt sein, Laufwerk und alle Funktionen muessen laut Beschreibung funktionieren. Speichergroesse, Kabel und OVP sind fuer den Preis irrelevant."
+}
