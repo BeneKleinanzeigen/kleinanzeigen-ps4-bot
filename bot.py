@@ -132,7 +132,17 @@ Antworte NUR mit einem JSON-Objekt, exakt in diesem Format, ohne weiteren Text d
     }
     resp = requests.post(CLAUDE_API, headers=headers, json=body, timeout=60)
     resp.raise_for_status()
-    text = resp.json()["content"][0]["text"]
+    resp_json = resp.json()
+
+    text = None
+    for block in resp_json.get("content", []):
+        if block.get("type") == "text" and "text" in block:
+            text = block["text"]
+            break
+
+    if text is None:
+        raise ValueError(f"Keine Text-Antwort im Response gefunden: {resp_json}")
+
     start = text.find("{")
     end = text.rfind("}") + 1
     return json.loads(text[start:end])
