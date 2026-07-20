@@ -106,7 +106,12 @@ Analysiere die angehaengten Fotos und den Text. Bestimme:
 4. Hinweise die gegen "voll funktionsfaehig" sprechen (z.B. "Laufwerk liest nicht", "als defekt",
    "Bastlerguert").
 
-Antworte NUR mit einem JSON-Objekt, exakt in diesem Format, ohne weiteren Text davor oder danach:
+Antworte IMMER mit einem gueltigen JSON-Objekt in genau diesem Format - auch wenn du dir bei
+einzelnen Werten unsicher bist. Nutze in Zweifelsfaellen die konservativste plausible Schaetzung
+(z.B. FAT als Standard-Variante, 0 Controller falls nicht erkennbar, 0 Spiele falls nicht
+erkennbar). Gib NIEMALS eine Rueckfrage, Entschuldigung, Warnung oder Erklaerung ausserhalb des
+JSON zurueck - auch nicht bei fehlenden oder unklaren Fotos. Antworte NUR mit dem JSON-Objekt,
+ohne weiteren Text davor oder danach:
 {{
   "variante": "FAT|Slim|Pro",
   "controller_anzahl": 0,
@@ -145,6 +150,8 @@ Antworte NUR mit einem JSON-Objekt, exakt in diesem Format, ohne weiteren Text d
 
     start = text.find("{")
     end = text.rfind("}") + 1
+    if start == -1 or end == 0:
+        raise ValueError(f"Kein JSON in der Antwort gefunden. Antworttext: {text[:300]!r}")
     return json.loads(text[start:end])
 
 
